@@ -1,4 +1,4 @@
-import type { CropType, Contract, ContractStatus } from "./types"
+import type { CropType, Contract } from "./types"
 import crypto from "crypto-js"
 
 const STORAGE_KEY = "contrato-safra-db"

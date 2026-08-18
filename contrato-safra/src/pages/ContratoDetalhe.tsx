@@ -45,6 +45,7 @@ export default function ContratoDetalhe() {
   }
 
   async function handleSend() {
+    if (!contract) return
     if (!confirm("Enviar este contrato para confirmação do comprador?")) return
     setSending(true)
     try {
@@ -61,9 +62,26 @@ export default function ContratoDetalhe() {
   }
 
   async function handleDelete() {
+    if (!contract) return
     if (!confirm("Excluir este contrato?")) return
     store.contracts.update(contract.id, { status: "expirado" })
     setContract(store.contracts.getById(contract.id))
+  }
+
+  async function handleConfirmDirect() {
+    if (!contract) return
+    if (!confirm("Confirmar este contrato sem enviar link ao comprador?")) return
+    setSending(true)
+    try {
+      store.contracts.update(contract.id, {
+        status: "confirmado",
+        confirmed_at: new Date().toISOString(),
+      })
+      setContract(store.contracts.getById(contract.id))
+      alert("Contrato confirmado. Validação por reconhecimento de firma pendente em cartório.")
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -75,6 +93,11 @@ export default function ContratoDetalhe() {
           <span className={`px-3 py-1 rounded text-sm font-medium ${statusColors[contract.status]}`}>
             {statusLabels[contract.status]}
           </span>
+        </div>
+
+        <div className="mb-6 rounded-md border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
+          <strong>Validação do documento:</strong> para que este contrato tenha validade, é necessário o
+          reconhecimento de firma das assinaturas em cartório.
         </div>
 
         <Card>
@@ -161,7 +184,8 @@ export default function ContratoDetalhe() {
               <ContractPreview contract={contract} />
               {contract.status === "rascunho" && (
                 <>
-                  <Button onClick={handleSend} disabled={sending}>Enviar para Confirmação</Button>
+                  <Button onClick={handleSend} disabled={sending} variant="outline">Enviar Link ao Comprador</Button>
+                  <Button onClick={handleConfirmDirect} disabled={sending}>Confirmar Direto</Button>
                   <Button variant="destructive" onClick={handleDelete}>Excluir</Button>
                 </>
               )}

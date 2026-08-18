@@ -40,6 +40,7 @@ export default function Confirmar() {
   const expired = contract.confirmation_expires_at && new Date(contract.confirmation_expires_at) < new Date()
 
   async function handleConfirm() {
+    if (!contract) return
     setConfirming(true)
     try {
       store.contracts.update(contract.id, {
@@ -56,6 +57,7 @@ export default function Confirmar() {
   }
 
   async function handleDivergence() {
+    if (!contract) return
     setConfirming(true)
     try {
       store.contracts.update(contract.id, {

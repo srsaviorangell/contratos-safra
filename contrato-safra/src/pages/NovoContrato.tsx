@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { store } from "../lib/store"
 import { useAuth } from "../contexts/AuthContext"
 import { calculateTotalValue, formatCurrency } from "../lib/calculations"
+import { maskDocument, maskPhone } from "../lib/masks"
 import type { CropType } from "../lib/types"
 import Header from "../components/Header"
 import { Button } from "../components/ui/button"
@@ -105,27 +106,27 @@ export default function NovoContrato() {
                 </div>
                 <div>
                   <Label>CPF/CNPJ</Label>
-                  <Input value={sellerDocument} onChange={(e) => setSellerDocument(e.target.value)} />
+                  <Input value={sellerDocument} onChange={(e) => setSellerDocument(maskDocument(e.target.value))} placeholder="000.000.000-00" />
                 </div>
                 <div>
                   <Label>Contato</Label>
-                  <Input value={sellerContact} onChange={(e) => setSellerContact(e.target.value)} />
+                  <Input value={sellerContact} onChange={(e) => setSellerContact(maskPhone(e.target.value))} placeholder="(99)-99999-9999" />
                 </div>
               </div>
 
               <div className="space-y-3">
-                <h3 className="font-medium text-sm text-gray-500 uppercase">Comprador</h3>-500 uppercase">Comprador</h3>
+                <h3 className="font-medium text-sm text-gray-500 uppercase">Comprador</h3>
                 <div>
                   <Label>Nome</Label>
                   <Input value={buyerName} onChange={(e) => setBuyerName(e.target.value)} required />
                 </div>
                 <div>
                   <Label>CPF/CNPJ</Label>
-                  <Input value={buyerDocument} onChange={(e) => setBuyerDocument(e.target.value)} />
+                  <Input value={buyerDocument} onChange={(e) => setBuyerDocument(maskDocument(e.target.value))} placeholder="000.000.000-00" />
                 </div>
                 <div>
                   <Label>Contato</Label>
-                  <Input value={buyerContact} onChange={(e) => setBuyerContact(e.target.value)} />
+                  <Input value={buyerContact} onChange={(e) => setBuyerContact(maskPhone(e.target.value))} placeholder="(99)-99999-9999" />
                 </div>
               </div>
 

@@ -43,9 +43,27 @@ export default function ContractPreview({ contract }: Props) {
               <div className="space-y-6">
                 <section>
                   <h2 className="font-semibold text-lg border-b pb-1 mb-3">1. IDENTIFICAÇÃO DAS PARTES</h2>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4 mb-4">
                     <div>
                       <p className="text-sm text-gray-500">Vendedor</p>
+                      <p className="font-medium">{contract.seller_name}</p>
+                    </div>
+                    {contract.seller_document && (
+                      <div>
+                        <p className="text-sm text-gray-500">CPF/CNPJ</p>
+                        <p className="font-medium">{contract.seller_document}</p>
+                      </div>
+                    )}
+                    {contract.seller_contact && (
+                      <div>
+                        <p className="text-sm text-gray-500">Contato</p>
+                        <p className="font-medium">{contract.seller_contact}</p>
+                      </div>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-gray-500">Comprador</p>
                       <p className="font-medium">{contract.buyer_name}</p>
                     </div>
                     {contract.buyer_document && (
@@ -133,23 +151,29 @@ export default function ContractPreview({ contract }: Props) {
                   <p className="text-sm text-gray-600">
                     O presente contrato é firmado entre as partes acima identificadas para compra e venda de produtos agrícolas,
                     comprometendo-se o vendedor a entregar o produto conforme as especificações e o comprador a efetuar o pagamento
-                    nas condições estabelecidas.
+                    nas condições estabelecidas. Para validação deste documento, é obrigatório o reconhecimento de firma das
+                    assinaturas em cartório, conferindo fé pública ao instrumento. A confirmação digital pelo comprador não
+                    substitui o reconhecimento de firma.
                   </p>
                 </section>
 
                 <div className="pt-8 flex justify-around">
                   <div className="text-center">
                     <div className="border-t border-gray-400 pt-2 px-12">
-                      <p className="font-medium">{contract.buyer_name}</p>
+                      <p className="font-medium">{contract.seller_name}</p>
                       <p className="text-sm text-gray-500">Vendedor</p>
                     </div>
                   </div>
                   <div className="text-center">
                     <div className="border-t border-gray-400 pt-2 px-12">
-                      <p className="font-medium">Comprador</p>
-                      <p className="text-sm text-gray-500">(a confirmar)</p>
+                      <p className="font-medium">{contract.buyer_name}</p>
+                      <p className="text-sm text-gray-500">Comprador</p>
                     </div>
                   </div>
+                </div>
+
+                <div className="text-center text-xs text-gray-400 mt-4">
+                  <p>Assinaturas sujeitas a reconhecimento de firma em cartório.</p>
                 </div>
 
                 {contract.confirmed_at && (

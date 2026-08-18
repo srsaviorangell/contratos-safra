@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
+import { maskPhone } from "../lib/masks"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
@@ -45,7 +46,7 @@ export default function Cadastro() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Telefone</Label>
-              <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+              <Input id="phone" value={phone} onChange={(e) => setPhone(maskPhone(e.target.value))} placeholder="(99)-99999-9999" required />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Senha</Label>
